@@ -133,4 +133,12 @@ describe("checkAndCreateUniqueDataFile", () => {
     existsSyncMock.mockRestore();
     writeFileSyncMock.mockRestore();
   });
+
+  it("should raise a typeError if the parameter is not a string", () => {
+    expect(() => checkAndCreateUniqueDataFile(1)).toThrow(TypeError);
+  });
+
+  it("should not raise a typeError if the parameter is a string", () => {
+    expect(() => checkAndCreateUniqueDataFile("Map")).not.toThrow(TypeError);
+  });
 });

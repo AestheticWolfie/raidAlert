@@ -31,6 +31,9 @@ export function checkAndCreateTotalDataFile() {
  * and creating it if necessary.
  */
 export function checkAndCreateUniqueDataFile(dataTypeString) {
+  if (typeof dataTypeString !== "string") {
+    throw new TypeError("checkAndCreateUniqueDataFile must be a string");
+  }
   const UNIQUE_DATA_PATH = `cache/unique${dataTypeString}Data.json`;
   if (!fs.existsSync(UNIQUE_DATA_PATH)) {
     fs.writeFileSync(UNIQUE_DATA_PATH, "[]");
