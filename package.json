@@ -15,7 +15,8 @@
     "commandkit": "^0.1.10",
     "discord.js": "^14.25.1",
     "dotenv": "^17.2.3",
-    "mongoose": "^9.0.2"
+    "mongoose": "^9.0.2",
+    "node-fetch": "^3.3.2"
   },
   "devDependencies": {
     "vitest": "^4.0.16"
