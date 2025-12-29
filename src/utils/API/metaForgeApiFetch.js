@@ -3,12 +3,13 @@ import fetch from "node-fetch";
 /**
  *
  * @param {string} url
+ * @returns
  *
- * @description Fetching raw data from API. Attempts to convert into json but will return whatever passed as ok.
+ * @description Fetching raw data from API.
  */
-export async function fetchTotalDataJson(url) {
+export async function fetchApiDataJson(url) {
   if (typeof url != "string") {
-    throw new TypeError("fetchTotalDataJson url must be a string");
+    throw new TypeError("fetchApiDataJson url must be a string");
   }
   const response = await fetch(url);
 
@@ -25,10 +26,15 @@ export async function fetchTotalDataJson(url) {
   return data;
 }
 
-export function parseTotalDataResponse(dataObject) {
+/**
+ *
+ * @param {{data: object.Array}} dataObject
+ * @returns {{data: object}}
+ */
+export function parseApiDataResponse(dataObject) {
   if (typeof dataObject != "object" || dataObject === null) {
     throw new Error(
-      "DataObject in parseTotalDataResponse is not an object. What recieved from the API is not what we expect"
+      "DataObject in parseApiDataResponse is not an object. What recieved from the API is not what we expect"
     );
   }
   if (
@@ -37,16 +43,24 @@ export function parseTotalDataResponse(dataObject) {
     dataObject?.data === null
   ) {
     throw new Error(
-      "Object we have recieved in parseTotalDataResponse is not the correct format. The data attribute is not what we expect"
+      "Object we have recieved in parseApiDataResponse is not the correct format. The data attribute is not what we expect"
     );
   }
 
   return dataObject;
 }
 
-export async function returnTotalData(url) {
-  const rawdataObject = await fetchTotalDataJson(url);
-  const validatedDataObject = parseTotalDataResponse(rawdataObject);
+// /**
+//  *
+//  * @param {string} url
+//  * @returns {{object}}
+//  *
+//  * @description Batches together fetchApiDataJson and parseApiDataResponse into one function
+//  */
+// export async function returnApiData(url) {
 
-  return validatedDataObject;
-}
+//   const rawdataObject = await fetchApiDataJson(url);
+//   const validatedDataObject = parseApiDataResponse(rawdataObject);
+
+//   return validatedDataObject;
+// }
