@@ -30,6 +30,8 @@ export async function fetchApiDataJson(url) {
  *
  * @param {{data: object.Array}} dataObject
  * @returns {{data: object}}
+ *
+ * @description Process data we get from API by returning a data object.
  */
 export function parseApiDataResponse(dataObject) {
   if (typeof dataObject != "object" || dataObject === null) {
