@@ -1,5 +1,7 @@
 import fs from "fs";
 
+import { CACHE_TOTAL_DATA_FILEPATH } from "../../constants/filePaths.js";
+
 /**
  * @description Ensures the cache directory exists by checking its existence
  * and creating it if necessary. Useful for preparing the filesystem for caching operations.
@@ -17,7 +19,7 @@ export function checkAndCreateCacheDirectory() {
  * and creating it if necessary.
  */
 export function checkAndCreateTotalDataFile() {
-  const TOTAL_DATA_PATH = "cache/totalData.json";
+  const TOTAL_DATA_PATH = CACHE_TOTAL_DATA_FILEPATH;
   if (!fs.existsSync(TOTAL_DATA_PATH)) {
     fs.writeFileSync(TOTAL_DATA_PATH, "{}");
   }
