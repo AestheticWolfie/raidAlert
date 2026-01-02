@@ -77,13 +77,13 @@ export function compareUniqueData(dataArray, UniqueDataCacheArray) {
  * @description Write data array to the uniqueDataFilePath
  */
 export function populateUniqueData(dataArray, uniqueDataFilePath) {
-  if (typeof totalDataFilepath !== "string") {
+  if (typeof uniqueDataFilePath !== "string") {
     throw new TypeError("Path must be a string");
   }
 
   fs.writeFileSync(
-    totalDataFilepath,
-    JSON.stringify(dataObject, null, 2),
+    uniqueDataFilePath,
+    JSON.stringify(dataArray, null, 2),
     "utf-8"
   );
 }
