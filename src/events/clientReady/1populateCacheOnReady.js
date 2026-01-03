@@ -41,7 +41,9 @@ export default async (client) => {
 
   // I could use parsed data but I'd rather get it from the pipeline
 
-  const rawCacheTotalData = await fetchCacheTotalData();
+  const rawCacheTotalData = await fetchCacheTotalData(
+    CACHE_TOTAL_DATA_FILEPATH
+  );
   const processedCacheTotalData = processCacheTotalData(rawCacheTotalData);
 
   // Map

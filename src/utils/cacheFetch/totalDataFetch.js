@@ -2,8 +2,13 @@ import fs from "fs/promises";
 
 import { CACHE_TOTAL_DATA_FILEPATH } from "../../constants/filePaths.js";
 
-export async function fetchCacheTotalData() {
-  const rawData = await fs.readFile(CACHE_TOTAL_DATA_FILEPATH, "utf-8");
+/**
+ *
+ * @param {string} cacheTotalDataFilepath
+ * @returns {object}
+ */
+export async function fetchCacheTotalData(cacheTotalDataFilepath) {
+  const rawData = await fs.readFile(cacheTotalDataFilepath, "utf-8");
 
   let dataObject;
   try {
