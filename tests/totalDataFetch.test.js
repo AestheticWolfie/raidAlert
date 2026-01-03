@@ -1,6 +1,6 @@
 import { test, describe, expect } from "vitest";
 
-import { processCacheTotalData } from "../src/utils/cacheFetch/totalDatafetch.js";
+import { processCacheTotalData } from "../src/utils/cacheFetch/totalDataFetch.js";
 
 describe("Incorrect input should flag a TypeError", () => {
   const invalidInputs = [1, "a", null, undefined, []];
