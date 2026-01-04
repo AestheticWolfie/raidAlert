@@ -10,7 +10,11 @@ import {
 } from "../../utils/API/metaForgeApiFetch.js";
 
 import { METAFORGE_API_URL } from "../../constants/apiUrl.js";
-import { CACHE_TOTAL_DATA_FILEPATH } from "../../constants/filePaths.js";
+import {
+  CACHE_TOTAL_DATA_FILEPATH,
+  CACHE_UNIQUE_EVENT_DATA_FILEPATH,
+  CACHE_UNIQUE_MAP_DATA_FILEPATH,
+} from "../../constants/filePaths.js";
 
 import {
   populateTotalData,
@@ -22,7 +26,12 @@ import {
 import {
   fetchCacheTotalData,
   processCacheTotalData,
-} from "../../utils/cacheFetch/totalDatafetch.js";
+} from "../../utils/cacheFetch/totalDataFetch.js";
+
+import {
+  fetchCacheUniqueData,
+  processCacheUniqueData,
+} from "../../utils/cacheFetch/uniqueDataFetch.js";
 
 /**
  * @param {import('discord.js').Client} client
@@ -51,12 +60,31 @@ export default async (client) => {
     processedCacheTotalData,
     "Map"
   ).sort();
-  populateUniqueData(mapUniqueData, "cache/uniqueMapData.json");
+
+  const rawCacheMapData = await fetchCacheUniqueData(
+    CACHE_UNIQUE_MAP_DATA_FILEPATH
+  );
+  const processedCacheMapData = processCacheUniqueData(rawCacheMapData);
+
+  const mergedMapData = compareUniqueData(mapUniqueData, processedCacheMapData);
+
+  populateUniqueData(mergedMapData, "cache/uniqueMapData.json");
 
   // Event
   const eventUniqueData = parseToUniqueData(
     processedCacheTotalData,
     "Event"
   ).sort();
-  populateUniqueData(eventUniqueData, "cache/uniqueEventData.json");
+
+  const rawCacheEventData = await fetchCacheUniqueData(
+    CACHE_UNIQUE_EVENT_DATA_FILEPATH
+  );
+  const processedCacheEventData = processCacheUniqueData(rawCacheEventData);
+
+  const mergedEventData = compareUniqueData(
+    eventUniqueData,
+    processedCacheEventData
+  );
+
+  populateUniqueData(mergedEventData, "cache/uniqueEventData.json");
 };
