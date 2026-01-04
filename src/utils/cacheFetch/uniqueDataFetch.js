@@ -1,6 +1,9 @@
 import fs from "fs/promises";
 
 export async function fetchCacheUniqueData(cacheUnqiueDataFilepath) {
+  if (typeof cacheUnqiueDataFilepath !== "string") {
+    throw TypeError("Filepath must be a string");
+  }
   const rawData = await fs.readFile(cacheUnqiueDataFilepath, "utf-8");
 
   let dataObject;

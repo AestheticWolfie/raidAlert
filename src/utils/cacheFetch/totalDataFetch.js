@@ -5,9 +5,12 @@ import { CACHE_TOTAL_DATA_FILEPATH } from "../../constants/filePaths.js";
 /**
  *
  * @param {string} cacheTotalDataFilepath
- * @returns {object}
+ * @returns {Promise}
  */
 export async function fetchCacheTotalData(cacheTotalDataFilepath) {
+  if (typeof cacheTotalDataFilepath !== "string") {
+    throw TypeError("Filepath must be a string");
+  }
   const rawData = await fs.readFile(cacheTotalDataFilepath, "utf-8");
 
   let dataObject;
