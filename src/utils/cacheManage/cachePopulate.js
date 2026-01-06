@@ -1,4 +1,5 @@
 import fs from "fs";
+import { atomicWriteJSONSync } from "./atomicPopulateWriteHelper.js";
 
 /**
  *
@@ -12,11 +13,7 @@ export function populateTotalData(dataObject, totalDataFilepath) {
     throw new TypeError("Path must be a string");
   }
 
-  fs.writeFileSync(
-    totalDataFilepath,
-    JSON.stringify(dataObject, null, 2),
-    "utf-8"
-  );
+  atomicWriteJSONSync(totalDataFilepath, dataObject);
 }
 
 /**
@@ -81,9 +78,5 @@ export function populateUniqueData(dataArray, uniqueDataFilePath) {
     throw new TypeError("Path must be a string");
   }
 
-  fs.writeFileSync(
-    uniqueDataFilePath,
-    JSON.stringify(dataArray, null, 2),
-    "utf-8"
-  );
+  atomicWriteJSONSync(uniqueDataFilePath, dataArray);
 }
