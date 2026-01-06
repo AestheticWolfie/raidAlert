@@ -37,11 +37,34 @@ import {
   processCacheUniqueData,
 } from "../../utils/cacheFetch/uniqueDataFetch.js";
 
+const UPDATE_TIME_MINS = 30;
+
 /**
  * @param {import('discord.js').Client} client
  */
 export default async (client) => {
+  const cacheState = await cacheManageScript(client);
+  if (cacheState !== "Success") {
+    console.log(`Cache setup failed!`);
+    return;
+  }
+  console.log(`Initial cache setup ok!`);
+
+  try {
+    setInterval(async () => {
+      await cacheManageScript(client);
+    }, 1000 * 60 * UPDATE_TIME_MINS);
+  } catch (error) {
+    console.log(`Cache set Interval Failed!`);
+    return;
+  }
+
+  console.log(`Interval cache setup ok!`);
+};
+
+async function cacheManageScript(client) {
   // This whole script may just be pulled out and put into its own function so I can pass it in interval.
+  // Future Drake in Walter White voice "You're goddamn right!"
 
   // Startup routine. Must be in this order. All is sync not async
   try {
@@ -247,4 +270,7 @@ export default async (client) => {
     );
     return;
   }
-};
+
+  console.log(`Updated Cache Ok!`);
+  return "Success";
+}
