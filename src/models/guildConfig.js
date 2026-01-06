@@ -5,12 +5,10 @@ import { FREE_TIER } from "../constants/subscriptionTiers.js";
 const messagePostSettingsSchema = new Schema({
   channelId: {
     type: String,
-    required: true,
     default: "",
   },
   messageId: {
     type: String,
-    required: true,
     default: "",
   },
 });
