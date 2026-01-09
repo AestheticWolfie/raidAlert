@@ -17,11 +17,11 @@ export async function fetchCacheUniqueData(cacheUnqiueDataFilepath) {
 }
 
 /**
+ * @description Input raw from getSpecificUnqiueData and process it so we can pass it into our embed.
  *
  * @param {Array} dataArray
  * @returns {Array}
  *
- * @description Process raw data from the unique data cache checking for inconsistencies
  */
 export function processCacheUniqueData(dataArray) {
   if (!Array.isArray(dataArray)) {
@@ -38,3 +38,66 @@ export function processCacheUniqueData(dataArray) {
 
   return dataArray;
 }
+
+/**
+ * @typedef {Object} Times
+ * @property {string} start
+ * @property {string} end
+ *
+ * @typedef {Object} RawData
+ * @property {string} game
+ * @property {string} map
+ * @property {string} icon
+ * @property {string} description
+ * @property {string[]} days
+ * @property {Times[]} times
+ *
+ * @description DataType is the keyword for which unique cache you want, so Map would be the map on and Event would be the 'name'.
+ * DataKeyword is what zones into the specific event, so 'harvester' would be valid
+ *
+ * Gets all data entries in totalData and returns an array of objects matching the type
+ *
+ * @param {string} dataKeyword
+ * @param {string} dataType
+ *
+ * @returns {RawData[]}
+ *
+ */
+export function getSpecificUniqueData(dataKeyword, dataType) {}
+
+/**
+ * @typedef {Object} Times
+ * @property {string} start
+ * @property {string} end
+ *
+ * @typedef {Object} RawData
+ * @property {string} game
+ * @property {string} map
+ * @property {string} icon
+ * @property {string} description
+ * @property {string[]} days
+ * @property {Times[]} times
+ *
+ * @typedef {Object} ProcessedData
+ * @property {string} game
+ * @property {string} map
+ * @property {Date} start
+ * @property {Date} end
+ * @property {number} state
+ *
+ * @typedef {Object} RefinedData
+ * @property {string} dataKeyword
+ * @property {ProcessedData[]} refinedDataArray
+ *
+ * @description Input raw from getSpecificUnqiueData and process it so we can pass it into our embed.
+ *
+ * @param {RawData[]} rawSpecificUnqiueDataArray
+ * @param {string} dataType
+ *
+ * @param {RefinedData}
+ *
+ */
+export function processSpecificUniqueData(
+  rawSpecificUnqiueDataArray,
+  dataType
+) {}
