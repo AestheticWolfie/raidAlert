@@ -1,5 +1,7 @@
 import fs from "fs/promises";
 
+import { timeState } from "../../constants/timeState.js";
+
 export async function fetchCacheUniqueData(cacheUnqiueDataFilepath) {
   if (typeof cacheUnqiueDataFilepath !== "string") {
     throw TypeError("Filepath must be a string");
@@ -59,11 +61,39 @@ export function processCacheUniqueData(dataArray) {
  *
  * @param {string} dataKeyword
  * @param {string} dataType
+ * @param {{data: RawData[]}} fetchedTotalData
  *
  * @returns {RawData[]}
  *
  */
-export function getSpecificUniqueData(dataKeyword, dataType) {}
+export function getSpecificUniqueData(dataKeyword, dataType, fetchedTotalData) {
+  const data = fetchedTotalData.data;
+
+  let formattedDataType;
+  switch (dataType) {
+    case "Map":
+      formattedDataType = "map";
+      break;
+    case "Event":
+      formattedDataType = "name";
+      break;
+
+    default:
+      throw Error(
+        `dataKeyword only accepts certain strings - ${dataType} is invalid! `
+      );
+  }
+
+  const specificUniqueDataArray = [];
+
+  for (const dataEle of data) {
+    if (dataEle[formattedDataType] === dataKeyword) {
+      specificUniqueDataArray.push(dataEle);
+    }
+  }
+
+  return specificUniqueDataArray;
+}
 
 /**
  * @typedef {Object} Times
@@ -72,6 +102,7 @@ export function getSpecificUniqueData(dataKeyword, dataType) {}
  *
  * @typedef {Object} RawData
  * @property {string} game
+ * @property {string} name
  * @property {string} map
  * @property {string} icon
  * @property {string} description
@@ -91,13 +122,81 @@ export function getSpecificUniqueData(dataKeyword, dataType) {}
  *
  * @description Input raw from getSpecificUnqiueData and process it so we can pass it into our embed.
  *
- * @param {RawData[]} rawSpecificUnqiueDataArray
+ * @param {string} dataKeyword
  * @param {string} dataType
- *
- * @param {RefinedData}
+ * @param {RawData[]} rawSpecificUnqiueDataArray
+ * @returns {RefinedData}
  *
  */
 export function processSpecificUniqueData(
-  rawSpecificUnqiueDataArray,
-  dataType
-) {}
+  dataKeyword,
+  dataType,
+  rawSpecificUnqiueDataArray
+) {
+  let formattedDataType;
+  switch (dataType) {
+    case "Map":
+      formattedDataType = "map";
+      break;
+    case "Event":
+      formattedDataType = "name";
+      break;
+
+    default:
+      throw Error(
+        `dataKeyword only accepts certain strings - ${dataType} is invalid! `
+      );
+  }
+
+  const refinedDataObject = {
+    dataKeyword: dataKeyword,
+    refinedDataArray: [],
+  };
+
+  for (const dataEle of rawSpecificUnqiueDataArray) {
+    for (const timeObjectEle of dataEle.times) {
+      const refinedObject = refinedObjectHelper(
+        dataEle.name,
+        dataEle.map,
+        timeObjectEle.start,
+        timeObjectEle.end
+      );
+
+      refinedDataObject.refinedDataArray.push(refinedObject);
+    }
+  }
+
+  return refinedDataObject;
+}
+
+function refinedObjectHelper(event, map, startString, endString) {
+  const now = new Date();
+  const startNext = new Date();
+  const endNext = new Date();
+
+  const [startHours, startMinutes] = startString.split(":").map(Number);
+  const [endHours, endMinutes] = endString.split(":").map(Number);
+
+  startNext.setUTCHours(startHours, startMinutes, 0, 0);
+  endNext.setUTCHours(endHours, endMinutes, 0, 0);
+
+  let state = timeState.START;
+  if (endNext <= now) {
+    endNext.setUTCDate(endNext.getUTCDate() + 1);
+    startNext.setUTCDate(startNext.getUTCDate() + 1);
+  } else {
+    if (startNext <= now) {
+      state = timeState.END;
+    }
+  }
+
+  const refinedObject = {
+    event: event,
+    map: map,
+    start: startNext,
+    end: endNext,
+    state: state,
+  };
+
+  return refinedObject;
+}

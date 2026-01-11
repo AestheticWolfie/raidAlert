@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node src/index.js",
     "test": "vitest",
-    "build": "echo 'No Build Yet'"
+    "build": "echo 'No Build Yet'",
+    "dev": "nodemon --ignore cache src/index.js"
   },
   "keywords": [],
   "type": "module",
@@ -20,6 +21,7 @@
     "node-fetch": "^3.3.2"
   },
   "devDependencies": {
+    "nodemon": "^3.1.11",
     "vitest": "^4.0.16"
   }
 }
