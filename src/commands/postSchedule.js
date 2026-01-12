@@ -5,7 +5,10 @@ import {
   processCacheTotalData,
 } from "../utils/cacheFetch/totalDataFetch.js";
 
-import { CACHE_TOTAL_DATA_FILEPATH } from "../constants/filePaths.js";
+import {
+  CACHE_TOTAL_DATA_FILEPATH,
+  CACHE_UNIQUE_EVENT_DATA_FILEPATH,
+} from "../constants/filePaths.js";
 import {
   DRAKE_DEV_ID,
   NOTIFICATION_DEV_CHANNEL,
@@ -14,9 +17,11 @@ import {
 import { createErrorNotifier } from "../utils/errorHandler.js";
 
 import {
+  fetchCacheUniqueData,
   getSpecificUniqueData,
   processSpecificUniqueData,
 } from "../utils/cacheFetch/uniqueDataFetch.js";
+import { postEventScheduleEmbedBuilder } from "../utils/customEmbeds/postScheduleEmbed.js";
 
 /** @type {import('commandkit').CommandData}  */
 export const data = {
@@ -48,17 +53,39 @@ export const run = async ({ interaction }) => {
     return;
   }
 
-  const rawDataArray = getSpecificUniqueData(
-    "Hidden Bunker",
-    "Event",
-    processedCacheTotalData
-  );
+  let uniqueEventArray;
+  try {
+    uniqueEventArray = await fetchCacheUniqueData(
+      CACHE_UNIQUE_EVENT_DATA_FILEPATH
+    );
+  } catch (error) {
+    await createErrorNotifier(
+      client,
+      NOTIFICATION_DEV_CHANNEL,
+      DRAKE_DEV_ID,
+      "Fetch Unique Cache Total Data",
+      error
+    );
+    return;
+  }
 
-  const processedDataObject = processSpecificUniqueData(
-    "Hidden Bunker",
-    "Event",
-    rawDataArray
-  );
+  let embedData = [];
+  for (const uniqueDataString of uniqueEventArray) {
+    const rawDataArray = getSpecificUniqueData(
+      uniqueDataString,
+      "Event",
+      processedCacheTotalData
+    );
 
-  console.log(processedDataObject);
+    const processedDataObject = processSpecificUniqueData(
+      uniqueDataString,
+      "Event",
+      rawDataArray
+    );
+
+    embedData.push(processedDataObject);
+  }
+  const postEmbed = postEventScheduleEmbedBuilder(embedData);
+
+  interaction.editReply({ embeds: [postEmbed] });
 };

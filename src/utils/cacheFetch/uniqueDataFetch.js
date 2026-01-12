@@ -1,6 +1,7 @@
 import fs from "fs/promises";
 
 import { timeState } from "../../constants/timeState.js";
+import { start } from "repl";
 
 export async function fetchCacheUniqueData(cacheUnqiueDataFilepath) {
   if (typeof cacheUnqiueDataFilepath !== "string") {
@@ -110,7 +111,7 @@ export function getSpecificUniqueData(dataKeyword, dataType, fetchedTotalData) {
  * @property {Times[]} times
  *
  * @typedef {Object} ProcessedData
- * @property {string} game
+ * @property {string} event
  * @property {string} map
  * @property {Date} start
  * @property {Date} end
@@ -133,6 +134,20 @@ export function processSpecificUniqueData(
   dataType,
   rawSpecificUnqiueDataArray
 ) {
+  if (typeof dataKeyword !== "string") {
+    throw TypeError(
+      "dataKeyword in processSpecificUniqueData needs to be a string"
+    );
+  }
+  if (typeof dataType !== "string") {
+    throw TypeError(
+      "dataKeyword in processSpecificUniqueData needs to be a string"
+    );
+  }
+  if (!Array.isArray(rawSpecificUnqiueDataArray)) {
+    throw TypeError("rawSpecificUnqiueDataArray needs to be an array");
+  }
+
   let formattedDataType;
   switch (dataType) {
     case "Map":
@@ -166,10 +181,41 @@ export function processSpecificUniqueData(
     }
   }
 
+  // Sorting refinedDataArray
+
+  let endSortedArray = refinedDataObject.refinedDataArray.filter(
+    (dataEle) => dataEle.state === timeState.END
+  );
+  endSortedArray = endSortedArray.sort((a, b) => a.end - b.end);
+
+  let startSortedArray = refinedDataObject.refinedDataArray.filter(
+    (dataEle) => dataEle.state === timeState.START
+  );
+  startSortedArray = startSortedArray.sort((a, b) => a.start - b.start);
+
+  const newSortedArray = endSortedArray.concat(startSortedArray);
+  refinedDataObject.refinedDataArray = newSortedArray;
+
   return refinedDataObject;
 }
 
 function refinedObjectHelper(event, map, startString, endString) {
+  if (typeof event !== "string") {
+    throw TypeError("event param in refinedObjectHelper needs to be a string");
+  }
+  if (typeof map !== "string") {
+    throw TypeError("map param in refinedObjectHelper needs to be a string");
+  }
+  if (typeof startString !== "string") {
+    throw TypeError(
+      "startString param in refinedObjectHelper needs to be a string"
+    );
+  }
+  if (typeof endString !== "string") {
+    throw TypeError(
+      "endString param in refinedObjectHelper needs to be a string"
+    );
+  }
   const now = new Date();
   const startNext = new Date();
   const endNext = new Date();
