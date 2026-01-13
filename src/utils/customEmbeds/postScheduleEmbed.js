@@ -27,7 +27,7 @@ export function postEventScheduleEmbedBuilder(processedSpecificUniqueData) {
       text: "Data provided by MetaForge",
       iconURL: "https://cdn.metaforge.app/logo.png",
     })
-    .setColor("#ed3232");
+    .setColor("#0f952c");
 
   return embed;
 }
