@@ -34,6 +34,10 @@ const guildConfigSchema = new Schema({
     required: true,
     default: FREE_TIER,
   },
+  isKicked: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const GuildConfig = model("GuildConfig", guildConfigSchema);

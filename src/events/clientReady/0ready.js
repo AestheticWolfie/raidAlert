@@ -1,6 +1,6 @@
 /**
  * @param {import('discord.js').Client} client
  */
-export default (client) => {
+export default async (client) => {
   console.log(`🤖 ${client.user.tag} is online and ready.`);
 };
