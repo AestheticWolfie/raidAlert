@@ -14,6 +14,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "agenda": "^5.0.0",
     "commandkit": "^0.1.10",
     "discord.js": "^14.25.1",
     "dotenv": "^17.2.3",

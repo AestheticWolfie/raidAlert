@@ -1,5 +1,3 @@
-import GuildConfig from "../../models/guildConfig.js";
-
 /**
  * @param {import('discord.js').Client} client
  */

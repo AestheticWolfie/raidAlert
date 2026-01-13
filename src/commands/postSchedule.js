@@ -26,6 +26,8 @@ import { postEventScheduleEmbedBuilder } from "../utils/customEmbeds/postSchedul
 
 import GuildConfig from "../models/guildConfig.js";
 
+import { createEventScheduleEmbedHelper } from "../utils/customEmbeds/createEventScheduleHelper.js";
+
 /** @type {import('commandkit').CommandData}  */
 export const data = {
   name: "post-schedule",
@@ -41,7 +43,7 @@ export const run = async ({ client, interaction }) => {
 
   await deletePreviousMessageHelper(client, interaction);
 
-  const postEmbed = await createEmbedHelper(client);
+  const postEmbed = await createEventScheduleEmbedHelper(client);
 
   if (postEmbed === undefined) {
     interaction.editReply({
@@ -70,77 +72,6 @@ export const run = async ({ client, interaction }) => {
     return;
   }
 };
-
-/**
- * @description Helper func which contains fetching all the data and then constructing an embed with the data provided.
- *
- * @returns {Promise<Embed>}
- */
-async function createEmbedHelper(client) {
-  let processedCacheTotalData;
-  try {
-    const rawCacheTotalData = await fetchCacheTotalData(
-      CACHE_TOTAL_DATA_FILEPATH
-    );
-    processedCacheTotalData = processCacheTotalData(rawCacheTotalData);
-  } catch (error) {
-    await createErrorNotifier(
-      client,
-      NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
-      "Fetch Cache Total Data",
-      error
-    );
-    return;
-  }
-
-  let uniqueEventArray;
-  try {
-    uniqueEventArray = await fetchCacheUniqueData(
-      CACHE_UNIQUE_EVENT_DATA_FILEPATH
-    );
-  } catch (error) {
-    await createErrorNotifier(
-      client,
-      NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
-      "Fetch Unique Cache Total Data",
-      error
-    );
-    return;
-  }
-
-  let embedData = [];
-  for (const uniqueDataString of uniqueEventArray) {
-    const rawDataArray = getSpecificUniqueData(
-      uniqueDataString,
-      "Event",
-      processedCacheTotalData
-    );
-
-    const processedDataObject = processSpecificUniqueData(
-      uniqueDataString,
-      "Event",
-      rawDataArray
-    );
-
-    embedData.push(processedDataObject);
-  }
-  const postEmbed = postEventScheduleEmbedBuilder(embedData);
-
-  if (postEmbed === undefined) {
-    await createErrorNotifier(
-      client,
-      NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
-      "Embed is undefined!",
-      error
-    );
-    return;
-  }
-
-  return postEmbed;
-}
 
 /**
  * @description Helper func which saves the newly create message to the db.
@@ -199,7 +130,7 @@ async function deletePreviousMessageHelper(client, interaction) {
     return;
   }
 
-  if (guildConfig === null) {
+  if (guildConfig === null || guildConfig === undefined) {
     return;
   }
 
