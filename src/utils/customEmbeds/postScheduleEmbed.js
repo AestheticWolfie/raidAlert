@@ -83,12 +83,12 @@ function stateMessageHelper(refinedDataArrayEle) {
   if (refinedDataArrayEle.state === timeState.START) {
     stateMessage = `🟡 **${refinedDataArrayEle.event}** ${
       refinedDataArrayEle.map
-    } starts in ${time(refinedDataArrayEle.start, "R")}`;
+    } starts ${time(refinedDataArrayEle.start, "R")}`;
   }
   if (refinedDataArrayEle.state === timeState.END) {
     stateMessage = `🟢 **${refinedDataArrayEle.event}** ${
       refinedDataArrayEle.map
-    } ends in ${time(refinedDataArrayEle.end, "R")}`;
+    } ends ${time(refinedDataArrayEle.end, "R")}`;
   }
 
   return stateMessage;

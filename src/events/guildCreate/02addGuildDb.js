@@ -12,34 +12,70 @@ import { createErrorNotifier } from "../../utils/errorHandler.js";
  * @description Check guild exists then add them to db.
  */
 export default async (guild, client) => {
-  let guildConfigDocument;
+  let currentGuildDocument;
   try {
-    guildConfigDocument = new GuildConfig({ guildId: guild.id });
+    currentGuildDocument = await GuildConfig.findOne({ guildId: guild.id });
   } catch (error) {
-    console.log(`Forming GuildConfig object failed in guildCreate:\n ${error}`);
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
-      "Forming GuildConfig object",
+      "Fetching GuildConfig object",
       error
     );
     return;
   }
 
-  try {
-    await guildConfigDocument.save();
-  } catch (error) {
-    console.log(`Saving GuildConfig object failed in guildCreate:\n ${error}`);
-    await createErrorNotifier(
-      client,
-      NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
-      "Saving GuildConfig object",
-      error
-    );
-    return;
-  }
+  if (currentGuildDocument === null) {
+    let newGuildConfigDocument;
+    try {
+      newGuildConfigDocument = new GuildConfig({ guildId: guild.id });
+    } catch (error) {
+      console.log(
+        `Forming GuildConfig object failed in guildCreate:\n ${error}`
+      );
+      await createErrorNotifier(
+        client,
+        NOTIFICATION_DEV_CHANNEL,
+        DRAKE_DEV_ID,
+        "Forming GuildConfig object",
+        error
+      );
+      return;
+    }
 
-  console.log(`Saving ${guild.name} - ${guild.id} success!`);
+    try {
+      await newGuildConfigDocument.save();
+    } catch (error) {
+      console.log(
+        `Saving GuildConfig object failed in guildCreate:\n ${error}`
+      );
+      await createErrorNotifier(
+        client,
+        NOTIFICATION_DEV_CHANNEL,
+        DRAKE_DEV_ID,
+        "Saving GuildConfig object",
+        error
+      );
+      return;
+    }
+
+    console.log(`Saving ${guild.name} - ${guild.id} success!`);
+    return;
+  } else {
+    currentGuildDocument.isKicked = false;
+
+    try {
+      await currentGuildDocument.save();
+    } catch (error) {
+      await createErrorNotifier(
+        client,
+        NOTIFICATION_DEV_CHANNEL,
+        DRAKE_DEV_ID,
+        "Saving GuildConfig object",
+        error
+      );
+      return;
+    }
+  }
 };
