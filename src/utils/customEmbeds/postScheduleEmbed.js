@@ -18,11 +18,28 @@ import { timeState } from "../../constants/timeState.js";
 export function postEventScheduleEmbedBuilder(processedSpecificUniqueData) {
   const embed = new EmbedBuilder()
     .setTitle("📅 Event Schedule")
-    .addFields(
-      processedSpecificUniqueData.map((ele) => {
+    .addFields([
+      {
+        name: "══════ ⚡ LIVE EVENTS ⚡ ══════",
+        value: activeMessageHelper(processedSpecificUniqueData),
+      },
+      // {
+      //   name: "───────────────────────────────────",
+      //   value: "",
+      // },
+      {
+        name: "════ ⚔️ COMPLETE SCHEDULE 🛡️ ════",
+        value: "\n",
+      },
+      ...processedSpecificUniqueData.map((ele) => {
         return { name: ele.dataKeyword, value: fieldHelper(ele) };
-      })
-    )
+      }),
+      {
+        name: "Notes",
+        value:
+          "Prospect Probes and Uncovered Caches may show incorrect data but everything else seems okay",
+      },
+    ])
     .setFooter({
       text: "Data provided by MetaForge",
       iconURL: "https://cdn.metaforge.app/logo.png",
@@ -92,4 +109,20 @@ function stateMessageHelper(refinedDataArrayEle) {
   }
 
   return stateMessage;
+}
+
+function activeMessageHelper(processedSpecificUniqueData) {
+  let activeMessage = "";
+  for (const processedSpecificUniqueDataEle of processedSpecificUniqueData) {
+    for (const dataEle of processedSpecificUniqueDataEle.refinedDataArray) {
+      if (dataEle.state === timeState.END) {
+        activeMessage += `${stateMessageHelper(dataEle)}\n`;
+      }
+    }
+  }
+
+  if (activeMessage === "") {
+    activeMessage = "🔴 No Events Active\n";
+  }
+  return activeMessage.slice(0, -1);
 }
