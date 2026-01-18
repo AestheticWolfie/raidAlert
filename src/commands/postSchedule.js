@@ -27,6 +27,7 @@ import { postEventScheduleEmbedBuilder } from "../utils/customEmbeds/postSchedul
 import GuildConfig from "../models/guildConfig.js";
 
 import { createEventScheduleEmbedHelper } from "../utils/customEmbeds/createEventScheduleHelper.js";
+import { NOT_ADMIN_MESSAGE } from "../constants/replies.js";
 
 /** @type {import('commandkit').CommandData}  */
 export const data = {
@@ -40,6 +41,11 @@ export const data = {
  */
 export const run = async ({ client, interaction }) => {
   await interaction.deferReply();
+
+  if (!interaction.member.permissions.has("Administrator")) {
+    interaction.editReply({ content: NOT_ADMIN_MESSAGE });
+    return;
+  }
 
   await deletePreviousMessageHelper(client, interaction);
 
@@ -58,7 +64,7 @@ export const run = async ({ client, interaction }) => {
   const updatedGuild = await saveMessageDataHelper(
     client,
     interaction,
-    finalMessage
+    finalMessage,
   );
 
   if (updatedGuild === undefined) {
@@ -67,7 +73,7 @@ export const run = async ({ client, interaction }) => {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "Guild update suspected failure",
-      error
+      error,
     );
     return;
   }
@@ -93,7 +99,7 @@ async function saveMessageDataHelper(client, interaction, message) {
           messageId: message.id,
         },
       },
-      { new: true }
+      { new: true },
     );
   } catch (error) {
     await createErrorNotifier(
@@ -101,7 +107,7 @@ async function saveMessageDataHelper(client, interaction, message) {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "Updating message post settings",
-      error
+      error,
     );
     return;
   }
@@ -125,7 +131,7 @@ async function deletePreviousMessageHelper(client, interaction) {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "Fetching guild info",
-      error
+      error,
     );
     return;
   }
@@ -141,14 +147,14 @@ async function deletePreviousMessageHelper(client, interaction) {
   let message;
   try {
     const channel = await client.channels.fetch(
-      guildConfig.messagePostSettings.channelId
+      guildConfig.messagePostSettings.channelId,
     );
     message = await channel.messages.fetch(
-      guildConfig.messagePostSettings.messageId
+      guildConfig.messagePostSettings.messageId,
     );
   } catch (error) {
     console.log(
-      `Fetching message error in delete. It may have already been deleted - ${interaction.guildId}`
+      `Fetching message error in delete. It may have already been deleted - ${interaction.guildId}`,
     );
     return;
   }
@@ -161,7 +167,7 @@ async function deletePreviousMessageHelper(client, interaction) {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "Deleting Previous Message",
-      error
+      error,
     );
     return;
   }
