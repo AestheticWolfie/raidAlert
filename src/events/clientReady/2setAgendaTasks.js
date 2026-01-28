@@ -2,12 +2,13 @@ import Agenda from "agenda";
 import GuildConfig from "../../models/guildConfig.js";
 import { createEventScheduleEmbedHelper } from "../../utils/customEmbeds/createEventScheduleHelper.js";
 import { UPDATE_EMBEDS } from "../../constants/agendaTaskNames.js";
+import { timestampConsoleLogs } from "../../utils/timestampLogs.js";
 
 /**
  * @param {import('discord.js').Client} client
  */
 export default async (client) => {
-  console.log(`Setting Agenda Tasks...`);
+  timestampConsoleLogs(`Setting Agenda Tasks...`);
   const agenda = new Agenda({ db: { address: process.env.MONGODB_TOKEN } });
 
   agenda.define(UPDATE_EMBEDS, async () => {
@@ -42,7 +43,7 @@ async function updateEventPostsHelper(client) {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "Fetching activeGuildConfigs",
-      error
+      error,
     );
     return;
   }
@@ -60,14 +61,14 @@ async function updateEventPostsHelper(client) {
     let message;
     try {
       const channel = await client.channels.fetch(
-        activeGuild.messagePostSettings.channelId
+        activeGuild.messagePostSettings.channelId,
       );
       message = await channel.messages.fetch(
-        activeGuild.messagePostSettings.messageId
+        activeGuild.messagePostSettings.messageId,
       );
     } catch (error) {
-      console.log(
-        `Error finding message in guild: ${activeGuild.guildId}. Might have been deleted in guild`
+      timestampConsoleLogs(
+        `Error finding message in guild: ${activeGuild.guildId}. Might have been deleted in guild`,
       );
       continue;
     }
@@ -84,7 +85,7 @@ async function updateEventPostsHelper(client) {
         NOTIFICATION_DEV_CHANNEL,
         DRAKE_DEV_ID,
         `Editing Embed - Guild: ${activeGuild.guildId} `,
-        error
+        error,
       );
       continue;
     }

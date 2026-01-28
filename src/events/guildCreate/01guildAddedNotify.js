@@ -1,5 +1,6 @@
 import { SUCCESS_DEV_CHANNEL } from "../../constants/discordIds.js";
 import { sendChannelMessage } from "../../utils/discordMessaging/sendMessage.js";
+import { timestampConsoleLogs } from "../../utils/timestampLogs.js";
 
 /**
  * @param {import('discord.js').Guild} guild
@@ -9,14 +10,14 @@ import { sendChannelMessage } from "../../utils/discordMessaging/sendMessage.js"
  */
 export default async (guild, client) => {
   const successMessage = `🥳🎉 ${guild.name} - ${guild.id} has joined the party!!! 🥳🎉`;
-  console.log(successMessage);
+  timestampConsoleLogs(successMessage);
 
   try {
     await sendChannelMessage(client, SUCCESS_DEV_CHANNEL, successMessage, {
       isAdmin: true,
     });
   } catch (error) {
-    console.log("success command error: ", error);
+    timestampConsoleLogs("success command error: ", error);
     return;
   }
 };

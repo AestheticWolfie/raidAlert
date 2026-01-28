@@ -8,6 +8,7 @@ import mongoose from "mongoose";
 
 import { dirname as dn, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { timestampConsoleLogs } from "./utils/timestampLogs.js";
 
 const dirname = dn(fileURLToPath(import.meta.url));
 
@@ -24,9 +25,9 @@ export const client = new Client({
 
 try {
   await mongoose.connect(process.env.MONGODB_TOKEN);
-  console.log("🛢 Connected to DB.");
+  timestampConsoleLogs("🛢 Connected to DB.");
 } catch (error) {
-  console.error("database connection error", error);
+  timestampConsoleLogs("database connection error", error);
 }
 
 new CommandKit({

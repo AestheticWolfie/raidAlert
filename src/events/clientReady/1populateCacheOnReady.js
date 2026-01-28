@@ -36,6 +36,7 @@ import {
   fetchCacheUniqueData,
   processCacheUniqueData,
 } from "../../utils/cacheFetch/uniqueDataFetch.js";
+import { timestampConsoleLogs } from "../../utils/timestampLogs.js";
 
 const UPDATE_TIME_MINS = 15;
 
@@ -45,10 +46,10 @@ const UPDATE_TIME_MINS = 15;
 export default async (client) => {
   const cacheState = await cacheManageScript(client);
   if (cacheState !== "Success") {
-    console.log(`Cache setup failed!`);
+    timestampConsoleLogs(`Cache setup failed!`);
     return;
   }
-  console.log(`Initial cache setup ok!`);
+  timestampConsoleLogs(`Initial cache setup ok!`);
 
   try {
     setInterval(
@@ -58,11 +59,11 @@ export default async (client) => {
       1000 * 60 * UPDATE_TIME_MINS,
     );
   } catch (error) {
-    console.log(`Cache set Interval Failed!`);
+    timestampConsoleLogs(`Cache set Interval Failed!`);
     return;
   }
 
-  console.log(`Interval cache setup ok!`);
+  timestampConsoleLogs(`Interval cache setup ok!`);
 };
 
 async function cacheManageScript(client) {
@@ -274,6 +275,6 @@ async function cacheManageScript(client) {
     return;
   }
 
-  console.log(`Updated Cache Ok!`);
+  timestampConsoleLogs(`Updated Cache Ok!`);
   return "Success";
 }
