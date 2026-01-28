@@ -34,7 +34,7 @@ export function processCacheUniqueData(dataArray) {
   for (const dataEle of dataArray) {
     if (typeof dataEle !== "string") {
       throw new TypeError(
-        "Some or all of data array's elements arent what is expected in processCacheUniqueData"
+        "Some or all of data array's elements arent what is expected in processCacheUniqueData",
       );
     }
   }
@@ -81,7 +81,7 @@ export function getSpecificUniqueData(dataKeyword, dataType, fetchedTotalData) {
 
     default:
       throw Error(
-        `dataKeyword only accepts certain strings - ${dataType} is invalid! `
+        `dataKeyword only accepts certain strings - ${dataType} is invalid! `,
       );
   }
 
@@ -97,18 +97,14 @@ export function getSpecificUniqueData(dataKeyword, dataType, fetchedTotalData) {
 }
 
 /**
- * @typedef {Object} Times
- * @property {string} start
- * @property {string} end
  *
  * @typedef {Object} RawData
  * @property {string} game
  * @property {string} name
  * @property {string} map
  * @property {string} icon
- * @property {string} description
- * @property {string[]} days
- * @property {Times[]} times
+ * @property {number} startTime
+ * @property {number} endTime
  *
  * @typedef {Object} ProcessedData
  * @property {string} event
@@ -132,16 +128,16 @@ export function getSpecificUniqueData(dataKeyword, dataType, fetchedTotalData) {
 export function processSpecificUniqueData(
   dataKeyword,
   dataType,
-  rawSpecificUnqiueDataArray
+  rawSpecificUnqiueDataArray,
 ) {
   if (typeof dataKeyword !== "string") {
     throw TypeError(
-      "dataKeyword in processSpecificUniqueData needs to be a string"
+      "dataKeyword in processSpecificUniqueData needs to be a string",
     );
   }
   if (typeof dataType !== "string") {
     throw TypeError(
-      "dataKeyword in processSpecificUniqueData needs to be a string"
+      "dataKeyword in processSpecificUniqueData needs to be a string",
     );
   }
   if (!Array.isArray(rawSpecificUnqiueDataArray)) {
@@ -159,7 +155,7 @@ export function processSpecificUniqueData(
 
     default:
       throw Error(
-        `dataKeyword only accepts certain strings - ${dataType} is invalid! `
+        `dataKeyword only accepts certain strings - ${dataType} is invalid! `,
       );
   }
 
@@ -169,27 +165,25 @@ export function processSpecificUniqueData(
   };
 
   for (const dataEle of rawSpecificUnqiueDataArray) {
-    for (const timeObjectEle of dataEle.times) {
-      const refinedObject = refinedObjectHelper(
-        dataEle.name,
-        dataEle.map,
-        timeObjectEle.start,
-        timeObjectEle.end
-      );
+    const refinedObject = refinedObjectHelper(
+      dataEle.name,
+      dataEle.map,
+      dataEle.startTime,
+      dataEle.endTime,
+    );
 
-      refinedDataObject.refinedDataArray.push(refinedObject);
-    }
+    refinedDataObject.refinedDataArray.push(refinedObject);
   }
 
   // Sorting refinedDataArray
 
   let endSortedArray = refinedDataObject.refinedDataArray.filter(
-    (dataEle) => dataEle.state === timeState.END
+    (dataEle) => dataEle.state === timeState.END,
   );
   endSortedArray = endSortedArray.sort((a, b) => a.end - b.end);
 
   let startSortedArray = refinedDataObject.refinedDataArray.filter(
-    (dataEle) => dataEle.state === timeState.START
+    (dataEle) => dataEle.state === timeState.START,
   );
   startSortedArray = startSortedArray.sort((a, b) => a.start - b.start);
 
@@ -199,32 +193,29 @@ export function processSpecificUniqueData(
   return refinedDataObject;
 }
 
-function refinedObjectHelper(event, map, startString, endString) {
+function refinedObjectHelper(event, map, startTimeNumber, endTimeNumber) {
   if (typeof event !== "string") {
     throw TypeError("event param in refinedObjectHelper needs to be a string");
   }
   if (typeof map !== "string") {
     throw TypeError("map param in refinedObjectHelper needs to be a string");
   }
-  if (typeof startString !== "string") {
+  if (typeof startTimeNumber !== "number") {
     throw TypeError(
-      "startString param in refinedObjectHelper needs to be a string"
+      "startString param in refinedObjectHelper needs to be a number",
     );
   }
-  if (typeof endString !== "string") {
+  if (typeof endTimeNumber !== "number") {
     throw TypeError(
-      "endString param in refinedObjectHelper needs to be a string"
+      "endString param in refinedObjectHelper needs to be a number",
     );
   }
   const now = new Date();
-  const startNext = new Date();
-  const endNext = new Date();
+  const startNext = new Date(startTimeNumber);
+  const endNext = new Date(endTimeNumber);
 
-  const [startHours, startMinutes] = startString.split(":").map(Number);
-  const [endHours, endMinutes] = endString.split(":").map(Number);
-
-  startNext.setUTCHours(startHours, startMinutes, 0, 0);
-  endNext.setUTCHours(endHours, endMinutes, 0, 0);
+  startNext.setUTCDate(now.getUTCDate());
+  endNext.setUTCDate(now.getUTCDate());
 
   let state = timeState.START;
   if (endNext <= now) {

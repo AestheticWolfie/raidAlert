@@ -72,50 +72,28 @@ describe("Correct output with correct input", () => {
     {
       data: [
         {
-          game: "arc-raiders",
-          name: "Prospecting Probes",
-          map: "Buried City",
-          icon: "https://cdn.metaforge.app/arc-raiders/custom/probe.webp",
-          description: "",
-          days: [],
-          times: [
-            {
-              start: "00:00",
-              end: "01:00",
-            },
-            {
-              start: "08:00",
-              end: "09:00",
-            },
-            {
-              start: "16:00",
-              end: "17:00",
-            },
-          ],
+          name: "Matriarch",
+          map: "Spaceport",
+          icon: "https://cdn.metaforge.app/arc-raiders/custom/matriarch.webp",
+          startTime: 1769569200000,
+          endTime: 1769572800000,
         },
         {
-          game: "arc-raiders",
-          name: "Cold Snap",
-          map: "Blue Gate",
-          icon: "https://cdn.metaforge.app/arc-raiders/custom/coldsnap.webp",
-          description: "",
-          days: [],
-          times: [
-            {
-              start: "00:00",
-              end: "02:00",
-            },
-            {
-              start: "08:00",
-              end: "10:00",
-            },
-            {
-              start: "16:00",
-              end: "18:00",
-            },
-          ],
+          name: "Night Raid",
+          map: "Buried City",
+          icon: "https://cdn.metaforge.app/arc-raiders/custom/night.webp",
+          startTime: 1769569200000,
+          endTime: 1769572800000,
+        },
+        {
+          name: "Lush Blooms",
+          map: "Dam",
+          icon: "https://cdn.metaforge.app/arc-raiders/custom/lush.webp",
+          startTime: 1769569200000,
+          endTime: 1769572800000,
         },
       ],
+      cachedAt: 1769574147364,
     },
   ];
 
