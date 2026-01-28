@@ -37,7 +37,7 @@ import {
   processCacheUniqueData,
 } from "../../utils/cacheFetch/uniqueDataFetch.js";
 
-const UPDATE_TIME_MINS = 30;
+const UPDATE_TIME_MINS = 15;
 
 /**
  * @param {import('discord.js').Client} client
@@ -51,9 +51,12 @@ export default async (client) => {
   console.log(`Initial cache setup ok!`);
 
   try {
-    setInterval(async () => {
-      await cacheManageScript(client);
-    }, 1000 * 60 * UPDATE_TIME_MINS);
+    setInterval(
+      async () => {
+        await cacheManageScript(client);
+      },
+      1000 * 60 * UPDATE_TIME_MINS,
+    );
   } catch (error) {
     console.log(`Cache set Interval Failed!`);
     return;
@@ -78,7 +81,7 @@ async function cacheManageScript(client) {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "Cache creation",
-      error
+      error,
     );
     return;
   }
@@ -93,7 +96,7 @@ async function cacheManageScript(client) {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "API Fetch",
-      error
+      error,
     );
     return;
   }
@@ -108,7 +111,7 @@ async function cacheManageScript(client) {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "API parse",
-      error
+      error,
     );
     return;
   }
@@ -121,7 +124,7 @@ async function cacheManageScript(client) {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "Populate Total Data",
-      error
+      error,
     );
     return;
   }
@@ -133,7 +136,7 @@ async function cacheManageScript(client) {
   let processedCacheTotalData;
   try {
     const rawCacheTotalData = await fetchCacheTotalData(
-      CACHE_TOTAL_DATA_FILEPATH
+      CACHE_TOTAL_DATA_FILEPATH,
     );
     processedCacheTotalData = processCacheTotalData(rawCacheTotalData);
   } catch (error) {
@@ -142,7 +145,7 @@ async function cacheManageScript(client) {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "Fetch Cache Total Data",
-      error
+      error,
     );
     return;
   }
@@ -157,7 +160,7 @@ async function cacheManageScript(client) {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "Parse Map Unqiue Data",
-      error
+      error,
     );
     return;
   }
@@ -165,7 +168,7 @@ async function cacheManageScript(client) {
   let processedCacheMapData;
   try {
     const rawCacheMapData = await fetchCacheUniqueData(
-      CACHE_UNIQUE_MAP_DATA_FILEPATH
+      CACHE_UNIQUE_MAP_DATA_FILEPATH,
     );
     processedCacheMapData = processCacheUniqueData(rawCacheMapData);
   } catch (error) {
@@ -174,7 +177,7 @@ async function cacheManageScript(client) {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "Fetch Unique Map Data",
-      error
+      error,
     );
     return;
   }
@@ -188,7 +191,7 @@ async function cacheManageScript(client) {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "Merging Incoming Map Unique Data With Cache Map",
-      error
+      error,
     );
     return;
   }
@@ -201,7 +204,7 @@ async function cacheManageScript(client) {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "Populating Cache Map Data",
-      error
+      error,
     );
     return;
   }
@@ -211,7 +214,7 @@ async function cacheManageScript(client) {
   try {
     eventUniqueData = parseToUniqueData(
       processedCacheTotalData,
-      "Event"
+      "Event",
     ).sort();
   } catch (error) {
     await createErrorNotifier(
@@ -219,7 +222,7 @@ async function cacheManageScript(client) {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "Parse Event Unqiue Data",
-      error
+      error,
     );
     return;
   }
@@ -227,7 +230,7 @@ async function cacheManageScript(client) {
   let processedCacheEventData;
   try {
     const rawCacheEventData = await fetchCacheUniqueData(
-      CACHE_UNIQUE_EVENT_DATA_FILEPATH
+      CACHE_UNIQUE_EVENT_DATA_FILEPATH,
     );
     processedCacheEventData = processCacheUniqueData(rawCacheEventData);
   } catch (error) {
@@ -236,7 +239,7 @@ async function cacheManageScript(client) {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "Fetch Unique Event Data",
-      error
+      error,
     );
     return;
   }
@@ -245,7 +248,7 @@ async function cacheManageScript(client) {
   try {
     mergedEventData = compareUniqueData(
       eventUniqueData,
-      processedCacheEventData
+      processedCacheEventData,
     );
   } catch (error) {
     await createErrorNotifier(
@@ -253,7 +256,7 @@ async function cacheManageScript(client) {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "Merging Incoming Event Unique Data With Cache Event",
-      error
+      error,
     );
     return;
   }
@@ -266,7 +269,7 @@ async function cacheManageScript(client) {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "Populating Cache Event Data",
-      error
+      error,
     );
     return;
   }
