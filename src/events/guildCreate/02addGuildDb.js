@@ -4,6 +4,7 @@ import {
 } from "../../constants/discordIds.js";
 import GuildConfig from "../../models/guildConfig.js";
 import { createErrorNotifier } from "../../utils/errorHandler.js";
+import { timestampConsoleLogs } from "../../utils/timestampLogs.js";
 
 /**
  * @param {import('discord.js').Guild} guild
@@ -21,7 +22,7 @@ export default async (guild, client) => {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "Fetching GuildConfig object",
-      error
+      error,
     );
     return;
   }
@@ -31,15 +32,12 @@ export default async (guild, client) => {
     try {
       newGuildConfigDocument = new GuildConfig({ guildId: guild.id });
     } catch (error) {
-      console.log(
-        `Forming GuildConfig object failed in guildCreate:\n ${error}`
-      );
       await createErrorNotifier(
         client,
         NOTIFICATION_DEV_CHANNEL,
         DRAKE_DEV_ID,
         "Forming GuildConfig object",
-        error
+        error,
       );
       return;
     }
@@ -47,20 +45,17 @@ export default async (guild, client) => {
     try {
       await newGuildConfigDocument.save();
     } catch (error) {
-      console.log(
-        `Saving GuildConfig object failed in guildCreate:\n ${error}`
-      );
       await createErrorNotifier(
         client,
         NOTIFICATION_DEV_CHANNEL,
         DRAKE_DEV_ID,
         "Saving GuildConfig object",
-        error
+        error,
       );
       return;
     }
 
-    console.log(`Saving ${guild.name} - ${guild.id} success!`);
+    timestampConsoleLogs(`Saving ${guild.name} - ${guild.id} success!`);
     return;
   } else {
     currentGuildDocument.isKicked = false;
@@ -73,7 +68,7 @@ export default async (guild, client) => {
         NOTIFICATION_DEV_CHANNEL,
         DRAKE_DEV_ID,
         "Saving GuildConfig object",
-        error
+        error,
       );
       return;
     }

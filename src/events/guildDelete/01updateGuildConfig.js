@@ -1,6 +1,7 @@
 import GuildConfig from "../../models/guildConfig.js";
 
 import { createErrorNotifier } from "../../utils/errorHandler.js";
+import { timestampConsoleLogs } from "../../utils/timestampLogs.js";
 
 /**
  * @param {import('discord.js').Guild} guild
@@ -18,7 +19,7 @@ export default async (guild, client) => {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "Fetching GuildConfig object",
-      error
+      error,
     );
     return;
   }
@@ -37,8 +38,10 @@ export default async (guild, client) => {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "Saving GuildConfig object",
-      error
+      error,
     );
     return;
   }
+
+  timestampConsoleLogs(`${guild.name} - ${guild.id} has left`);
 };

@@ -1,5 +1,7 @@
 import { sendChannelMessage } from "./discordMessaging/sendMessage.js";
 
+import { timestampConsoleLogs } from "./timestampLogs.js";
+
 /**
  *
  * @param {import('discord.js').Client} client
@@ -13,13 +15,13 @@ export async function createErrorNotifier(
   channelId,
   devUserId,
   operation,
-  errorMessage
+  errorMessage,
 ) {
-  console.log(`${operation} Failed : \n ${errorMessage}`);
+  timestampConsoleLogs(`${operation} Failed : \n ${errorMessage}`);
   await sendChannelMessage(
     client,
     channelId,
     `<@${devUserId}> Cache Creation Failed : \n ${errorMessage}`,
-    { isAdmin: true }
+    { isAdmin: true },
   );
 }

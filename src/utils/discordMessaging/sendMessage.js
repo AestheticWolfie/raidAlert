@@ -1,3 +1,5 @@
+import { timestampConsoleLogs } from "../timestampLogs.js";
+
 /**
  *
  * @param {import('discord.js').Client} client
@@ -11,7 +13,7 @@ export async function sendChannelMessage(
   client,
   channelId,
   content,
-  options = {}
+  options = {},
 ) {
   const { isAdmin = false } = options;
 
@@ -20,7 +22,7 @@ export async function sendChannelMessage(
       const channel = await client.channels.fetch(channelId);
       await channel.send(content);
     } catch (error) {
-      console.error("Admin notification failed:", error);
+      timestampConsoleLogs("Admin notification failed:", error);
     }
     return;
   }
