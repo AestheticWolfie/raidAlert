@@ -10,9 +10,9 @@
   },
   "keywords": [],
   "type": "module",
-  "author": "",
+  "author": "Drake Wolstenholme",
   "license": "ISC",
-  "description": "",
+  "description": "Discord bot which uses metaforge's API to fetch and display event data in discord from Arc Raiders",
   "dependencies": {
     "agenda": "^5.0.0",
     "commandkit": "^0.1.10",

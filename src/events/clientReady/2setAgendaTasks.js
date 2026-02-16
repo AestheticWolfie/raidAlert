@@ -3,6 +3,11 @@ import GuildConfig from "../../models/guildConfig.js";
 import { createEventScheduleEmbedHelper } from "../../utils/customEmbeds/createEventScheduleHelper.js";
 import { UPDATE_EMBEDS } from "../../constants/agendaTaskNames.js";
 import { timestampConsoleLogs } from "../../utils/timestampLogs.js";
+import {
+  NOTIFICATION_DEV_CHANNEL,
+  DRAKE_DEV_ID,
+} from "../../constants/discordIds.js";
+import { createErrorNotifier } from "../../utils/errorHandler.js";
 
 /**
  * @param {import('discord.js').Client} client
