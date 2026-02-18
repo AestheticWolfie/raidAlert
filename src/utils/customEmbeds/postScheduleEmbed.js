@@ -36,8 +36,7 @@ export function postEventScheduleEmbedBuilder(processedSpecificUniqueData) {
       }),
       {
         name: "Notes",
-        value:
-          "Prospect Probes and Uncovered Caches may show incorrect data but everything else seems okay",
+        value: "",
       },
     ])
     .setFooter({
