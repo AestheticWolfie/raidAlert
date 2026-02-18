@@ -1,4 +1,4 @@
-import { Embed } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 
 import {
   fetchCacheTotalData,
@@ -27,13 +27,13 @@ import { postEventScheduleEmbedBuilder } from "../customEmbeds/postScheduleEmbed
 /**
  * @description Helper func which contains fetching all the data and then constructing an embed with the data provided.
  *
- * @returns {Promise<Embed>}
+ * @returns {Promise<EmbedBuilder>}
  */
 export async function createEventScheduleEmbedHelper(client) {
   let processedCacheTotalData;
   try {
     const rawCacheTotalData = await fetchCacheTotalData(
-      CACHE_TOTAL_DATA_FILEPATH
+      CACHE_TOTAL_DATA_FILEPATH,
     );
     processedCacheTotalData = processCacheTotalData(rawCacheTotalData);
   } catch (error) {
@@ -42,7 +42,7 @@ export async function createEventScheduleEmbedHelper(client) {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "Fetch Cache Total Data",
-      error
+      error,
     );
     return;
   }
@@ -50,7 +50,7 @@ export async function createEventScheduleEmbedHelper(client) {
   let uniqueEventArray;
   try {
     uniqueEventArray = await fetchCacheUniqueData(
-      CACHE_UNIQUE_EVENT_DATA_FILEPATH
+      CACHE_UNIQUE_EVENT_DATA_FILEPATH,
     );
   } catch (error) {
     await createErrorNotifier(
@@ -58,7 +58,7 @@ export async function createEventScheduleEmbedHelper(client) {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "Fetch Unique Cache Total Data",
-      error
+      error,
     );
     return;
   }
@@ -68,13 +68,13 @@ export async function createEventScheduleEmbedHelper(client) {
     const rawDataArray = getSpecificUniqueData(
       uniqueDataString,
       "Event",
-      processedCacheTotalData
+      processedCacheTotalData,
     );
 
     const processedDataObject = processSpecificUniqueData(
       uniqueDataString,
       "Event",
-      rawDataArray
+      rawDataArray,
     );
 
     embedData.push(processedDataObject);
@@ -87,7 +87,7 @@ export async function createEventScheduleEmbedHelper(client) {
       NOTIFICATION_DEV_CHANNEL,
       DRAKE_DEV_ID,
       "Embed is undefined!",
-      error
+      error,
     );
     return;
   }

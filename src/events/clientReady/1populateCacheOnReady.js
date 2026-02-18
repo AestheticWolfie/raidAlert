@@ -3,8 +3,6 @@ import {
   NOTIFICATION_DEV_CHANNEL,
 } from "../../constants/discordIds.js";
 
-import { sendChannelMessage } from "../../utils/discordMessaging/sendMessage.js";
-
 import {
   checkAndCreateTotalDataFile,
   checkAndCreateCacheDirectory,

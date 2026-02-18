@@ -6,7 +6,7 @@ import { CommandKit } from "commandkit";
 
 import mongoose from "mongoose";
 
-import { dirname as dn, join } from "node:path";
+import { dirname as dn } from "node:path";
 import { fileURLToPath } from "node:url";
 import { timestampConsoleLogs } from "./utils/timestampLogs.js";
 

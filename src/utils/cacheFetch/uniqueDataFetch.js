@@ -1,7 +1,6 @@
 import fs from "fs/promises";
 
 import { timeState } from "../../constants/timeState.js";
-import { start } from "repl";
 
 export async function fetchCacheUniqueData(cacheUnqiueDataFilepath) {
   if (typeof cacheUnqiueDataFilepath !== "string") {
