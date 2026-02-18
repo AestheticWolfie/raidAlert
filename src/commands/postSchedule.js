@@ -15,7 +15,7 @@ import { NOT_ADMIN_MESSAGE } from "../constants/replies.js";
 /** @type {import('commandkit').CommandData}  */
 export const data = {
   name: "post-schedule",
-  description: "Post an up to data schedule of arc raiders events.",
+  description: "Post an up to date schedule of arc raiders events.",
   type: ApplicationCommandType.ChatInput,
 };
 

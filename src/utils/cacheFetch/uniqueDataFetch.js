@@ -2,11 +2,11 @@ import fs from "fs/promises";
 
 import { timeState } from "../../constants/timeState.js";
 
-export async function fetchCacheUniqueData(cacheUnqiueDataFilepath) {
-  if (typeof cacheUnqiueDataFilepath !== "string") {
+export async function fetchCacheUniqueData(cacheUniqueDataFilepath) {
+  if (typeof cacheUniqueDataFilepath !== "string") {
     throw TypeError("Filepath must be a string");
   }
-  const rawData = await fs.readFile(cacheUnqiueDataFilepath, "utf-8");
+  const rawData = await fs.readFile(cacheUniqueDataFilepath, "utf-8");
 
   let dataObject;
   try {
@@ -19,7 +19,7 @@ export async function fetchCacheUniqueData(cacheUnqiueDataFilepath) {
 }
 
 /**
- * @description Input raw from getSpecificUnqiueData and process it so we can pass it into our embed.
+ * @description Input raw from getSpecificUniqueData and process it so we can pass it into our embed.
  *
  * @param {Array} dataArray
  * @returns {Array}
@@ -116,18 +116,18 @@ export function getSpecificUniqueData(dataKeyword, dataType, fetchedTotalData) {
  * @property {string} dataKeyword
  * @property {ProcessedData[]} refinedDataArray
  *
- * @description Input raw from getSpecificUnqiueData and process it so we can pass it into our embed.
+ * @description Input raw from getSpecificUniqueData and process it so we can pass it into our embed.
  *
  * @param {string} dataKeyword
  * @param {string} dataType
- * @param {RawData[]} rawSpecificUnqiueDataArray
+ * @param {RawData[]} rawSpecificUniqueDataArray
  * @returns {RefinedData}
  *
  */
 export function processSpecificUniqueData(
   dataKeyword,
   dataType,
-  rawSpecificUnqiueDataArray,
+  rawSpecificUniqueDataArray,
 ) {
   if (typeof dataKeyword !== "string") {
     throw TypeError(
@@ -139,8 +139,8 @@ export function processSpecificUniqueData(
       "dataKeyword in processSpecificUniqueData needs to be a string",
     );
   }
-  if (!Array.isArray(rawSpecificUnqiueDataArray)) {
-    throw TypeError("rawSpecificUnqiueDataArray needs to be an array");
+  if (!Array.isArray(rawSpecificUniqueDataArray)) {
+    throw TypeError("rawSpecificUniqueDataArray needs to be an array");
   }
 
   let formattedDataType;
@@ -163,7 +163,7 @@ export function processSpecificUniqueData(
     refinedDataArray: [],
   };
 
-  for (const dataEle of rawSpecificUnqiueDataArray) {
+  for (const dataEle of rawSpecificUniqueDataArray) {
     const refinedObject = refinedObjectHelper(
       dataEle.name,
       dataEle.map,

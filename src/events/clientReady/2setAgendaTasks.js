@@ -14,7 +14,7 @@ import { createErrorNotifier } from "../../utils/errorHandler.js";
  */
 export default async (client) => {
   timestampConsoleLogs(`Setting Agenda Tasks...`);
-  const agenda = new Agenda({ db: { address: process.env.MONGODB_TOKEN } });
+  const agenda = new Agenda({ db: { address: process.env.MONGODB_URI } });
 
   agenda.define(UPDATE_EMBEDS, async () => {
     const dateNowMins = new Date().getMinutes();

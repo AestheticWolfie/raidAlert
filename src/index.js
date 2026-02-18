@@ -24,7 +24,7 @@ export const client = new Client({
 });
 
 try {
-  await mongoose.connect(process.env.MONGODB_TOKEN);
+  await mongoose.connect(process.env.MONGODB_URI);
   timestampConsoleLogs("🛢 Connected to DB.");
 } catch (error) {
   timestampConsoleLogs("database connection error", error);
