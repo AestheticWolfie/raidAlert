@@ -44,8 +44,8 @@ new CommandKit({
   commandsPath: `${dirname}/commands`,
   validationsPath: `${dirname}/validations`,
   bulkRegister: true,
-  devGuildIds: devUserIdsArray,
-  devUserIds: devGuildIdsArray,
+  devGuildIds: devGuildIdsArray,
+  devUserIds: devUserIdsArray,
 });
 
 client.login(process.env.DISCORD_TOKEN);
