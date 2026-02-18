@@ -4,7 +4,7 @@ import { createErrorNotifier } from "../../utils/errorHandler.js";
 import { timestampConsoleLogs } from "../../utils/timestampLogs.js";
 
 import {
-  DRAKE_DEV_ID,
+  DEV_ID,
   NOTIFICATION_DEV_CHANNEL,
 } from "../../constants/discordIds.js";
 
@@ -22,7 +22,7 @@ export default async (guild, client) => {
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
+      DEV_ID,
       "Fetching GuildConfig object",
       error,
     );
@@ -41,7 +41,7 @@ export default async (guild, client) => {
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
+      DEV_ID,
       "Saving GuildConfig object",
       error,
     );

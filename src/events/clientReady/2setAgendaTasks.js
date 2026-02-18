@@ -5,7 +5,7 @@ import { UPDATE_EMBEDS } from "../../constants/agendaTaskNames.js";
 import { timestampConsoleLogs } from "../../utils/timestampLogs.js";
 import {
   NOTIFICATION_DEV_CHANNEL,
-  DRAKE_DEV_ID,
+  DEV_ID,
 } from "../../constants/discordIds.js";
 import { createErrorNotifier } from "../../utils/errorHandler.js";
 
@@ -48,7 +48,7 @@ async function updateEventPostsHelper(client) {
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
+      DEV_ID,
       "Fetching activeGuildConfigs",
       error,
     );
@@ -90,7 +90,7 @@ async function updateEventPostsHelper(client) {
       await createErrorNotifier(
         client,
         NOTIFICATION_DEV_CHANNEL,
-        DRAKE_DEV_ID,
+        DEV_ID,
         `Editing Embed - Guild: ${activeGuild.guildId} `,
         error,
       );

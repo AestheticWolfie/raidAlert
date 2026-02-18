@@ -1,5 +1,5 @@
 import {
-  DRAKE_DEV_ID,
+  DEV_ID,
   NOTIFICATION_DEV_CHANNEL,
 } from "../../constants/discordIds.js";
 
@@ -81,7 +81,7 @@ async function cacheManageScript(client) {
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
+      DEV_ID,
       "Cache creation",
       error,
     );
@@ -96,7 +96,7 @@ async function cacheManageScript(client) {
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
+      DEV_ID,
       "API Fetch",
       error,
     );
@@ -111,7 +111,7 @@ async function cacheManageScript(client) {
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
+      DEV_ID,
       "API parse",
       error,
     );
@@ -124,7 +124,7 @@ async function cacheManageScript(client) {
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
+      DEV_ID,
       "Populate Total Data",
       error,
     );
@@ -145,7 +145,7 @@ async function cacheManageScript(client) {
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
+      DEV_ID,
       "Fetch Cache Total Data",
       error,
     );
@@ -160,7 +160,7 @@ async function cacheManageScript(client) {
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
+      DEV_ID,
       "Parse Map Unqiue Data",
       error,
     );
@@ -177,7 +177,7 @@ async function cacheManageScript(client) {
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
+      DEV_ID,
       "Fetch Unique Map Data",
       error,
     );
@@ -191,7 +191,7 @@ async function cacheManageScript(client) {
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
+      DEV_ID,
       "Merging Incoming Map Unique Data With Cache Map",
       error,
     );
@@ -204,7 +204,7 @@ async function cacheManageScript(client) {
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
+      DEV_ID,
       "Populating Cache Map Data",
       error,
     );
@@ -222,7 +222,7 @@ async function cacheManageScript(client) {
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
+      DEV_ID,
       "Parse Event Unqiue Data",
       error,
     );
@@ -239,7 +239,7 @@ async function cacheManageScript(client) {
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
+      DEV_ID,
       "Fetch Unique Event Data",
       error,
     );
@@ -256,7 +256,7 @@ async function cacheManageScript(client) {
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
+      DEV_ID,
       "Merging Incoming Event Unique Data With Cache Event",
       error,
     );
@@ -269,7 +269,7 @@ async function cacheManageScript(client) {
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
+      DEV_ID,
       "Populating Cache Event Data",
       error,
     );
