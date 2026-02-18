@@ -216,6 +216,9 @@ function refinedObjectHelper(event, map, startTimeNumber, endTimeNumber) {
   startNext.setUTCDate(now.getUTCDate());
   endNext.setUTCDate(now.getUTCDate());
 
+  // The reason for this part is because events repeat on a daily cycle and I get TODAYS data. Meaning things that have
+  // happened today will assumed to be happening tomorrow and the next day until the API changes the data and we change
+  // with it. So we only care about the hour and minute and whats infront of us.
   let state = timeState.START;
   if (endNext <= now) {
     endNext.setUTCDate(endNext.getUTCDate() + 1);
