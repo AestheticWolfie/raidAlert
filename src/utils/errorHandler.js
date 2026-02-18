@@ -21,7 +21,7 @@ export async function createErrorNotifier(
   await sendChannelMessage(
     client,
     channelId,
-    `<@${devUserId}> Cache Creation Failed : \n ${errorMessage}`,
+    `<@${devUserId}> ${operation} : \n ${errorMessage}`,
     { isAdmin: true },
   );
 }

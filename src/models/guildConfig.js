@@ -26,6 +26,7 @@ const guildConfigSchema = new Schema({
     type: String,
     required: true,
     index: true,
+    unique: true,
   },
   messagePostSettings: { type: messagePostSettingsSchema, default: () => ({}) },
   notifiers: [notifierSchema],

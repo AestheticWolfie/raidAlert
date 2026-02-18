@@ -96,19 +96,20 @@ function fieldHelper(dataEle) {
  * @param {ProcessedData} refinedDataArrayEle
  */
 function stateMessageHelper(refinedDataArrayEle) {
-  let stateMessage;
   if (refinedDataArrayEle.state === timeState.START) {
-    stateMessage = `🟡 **${refinedDataArrayEle.event}** ${
+    const stateMessage = `🟡 **${refinedDataArrayEle.event}** ${
       refinedDataArrayEle.map
     } starts ${time(refinedDataArrayEle.start, "R")}`;
+    return stateMessage;
   }
   if (refinedDataArrayEle.state === timeState.END) {
-    stateMessage = `🟢 **${refinedDataArrayEle.event}** ${
+    const stateMessage = `🟢 **${refinedDataArrayEle.event}** ${
       refinedDataArrayEle.map
     } ends ${time(refinedDataArrayEle.end, "R")}`;
+    return stateMessage;
   }
 
-  return stateMessage;
+  throw new Error(`Invalid state: ${refinedDataArrayEle.state}`);
 }
 
 function activeMessageHelper(processedSpecificUniqueData) {

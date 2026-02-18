@@ -1,13 +1,12 @@
 import fs from "fs/promises";
 
 import { timeState } from "../../constants/timeState.js";
-import { start } from "repl";
 
-export async function fetchCacheUniqueData(cacheUnqiueDataFilepath) {
-  if (typeof cacheUnqiueDataFilepath !== "string") {
+export async function fetchCacheUniqueData(cacheUniqueDataFilepath) {
+  if (typeof cacheUniqueDataFilepath !== "string") {
     throw TypeError("Filepath must be a string");
   }
-  const rawData = await fs.readFile(cacheUnqiueDataFilepath, "utf-8");
+  const rawData = await fs.readFile(cacheUniqueDataFilepath, "utf-8");
 
   let dataObject;
   try {
@@ -20,7 +19,7 @@ export async function fetchCacheUniqueData(cacheUnqiueDataFilepath) {
 }
 
 /**
- * @description Input raw from getSpecificUnqiueData and process it so we can pass it into our embed.
+ * @description Input raw from getSpecificUniqueData and process it so we can pass it into our embed.
  *
  * @param {Array} dataArray
  * @returns {Array}
@@ -117,18 +116,18 @@ export function getSpecificUniqueData(dataKeyword, dataType, fetchedTotalData) {
  * @property {string} dataKeyword
  * @property {ProcessedData[]} refinedDataArray
  *
- * @description Input raw from getSpecificUnqiueData and process it so we can pass it into our embed.
+ * @description Input raw from getSpecificUniqueData and process it so we can pass it into our embed.
  *
  * @param {string} dataKeyword
  * @param {string} dataType
- * @param {RawData[]} rawSpecificUnqiueDataArray
+ * @param {RawData[]} rawSpecificUniqueDataArray
  * @returns {RefinedData}
  *
  */
 export function processSpecificUniqueData(
   dataKeyword,
   dataType,
-  rawSpecificUnqiueDataArray,
+  rawSpecificUniqueDataArray,
 ) {
   if (typeof dataKeyword !== "string") {
     throw TypeError(
@@ -140,8 +139,8 @@ export function processSpecificUniqueData(
       "dataKeyword in processSpecificUniqueData needs to be a string",
     );
   }
-  if (!Array.isArray(rawSpecificUnqiueDataArray)) {
-    throw TypeError("rawSpecificUnqiueDataArray needs to be an array");
+  if (!Array.isArray(rawSpecificUniqueDataArray)) {
+    throw TypeError("rawSpecificUniqueDataArray needs to be an array");
   }
 
   let formattedDataType;
@@ -155,7 +154,7 @@ export function processSpecificUniqueData(
 
     default:
       throw Error(
-        `dataKeyword only accepts certain strings - ${dataType} is invalid! `,
+        `dataType only accepts certain strings - ${dataType} is invalid! `,
       );
   }
 
@@ -164,7 +163,7 @@ export function processSpecificUniqueData(
     refinedDataArray: [],
   };
 
-  for (const dataEle of rawSpecificUnqiueDataArray) {
+  for (const dataEle of rawSpecificUniqueDataArray) {
     const refinedObject = refinedObjectHelper(
       dataEle.name,
       dataEle.map,
@@ -217,6 +216,9 @@ function refinedObjectHelper(event, map, startTimeNumber, endTimeNumber) {
   startNext.setUTCDate(now.getUTCDate());
   endNext.setUTCDate(now.getUTCDate());
 
+  // The reason for this part is because events repeat on a daily cycle and I get TODAYS data. Meaning things that have
+  // happened today will assumed to be happening tomorrow and the next day until the API changes the data and we change
+  // with it. So we only care about the hour and minute and whats infront of us.
   let state = timeState.START;
   if (endNext <= now) {
     endNext.setUTCDate(endNext.getUTCDate() + 1);

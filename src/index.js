@@ -6,7 +6,7 @@ import { CommandKit } from "commandkit";
 
 import mongoose from "mongoose";
 
-import { dirname as dn, join } from "node:path";
+import { dirname as dn } from "node:path";
 import { fileURLToPath } from "node:url";
 import { timestampConsoleLogs } from "./utils/timestampLogs.js";
 
@@ -14,17 +14,15 @@ const dirname = dn(fileURLToPath(import.meta.url));
 
 export const client = new Client({
   intents: [
-    IntentsBitField.Flags.Guilds,
-    IntentsBitField.Flags.GuildMembers,
-    IntentsBitField.Flags.GuildMessages,
-    IntentsBitField.Flags.MessageContent,
     GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
   ],
 });
 
 try {
-  await mongoose.connect(process.env.MONGODB_TOKEN);
+  await mongoose.connect(process.env.MONGODB_URI);
   timestampConsoleLogs("🛢 Connected to DB.");
 } catch (error) {
   timestampConsoleLogs("database connection error", error);
