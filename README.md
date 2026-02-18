@@ -1,4 +1,5 @@
 <img width="1280" height="320" alt="Raid Alert Banner" src="https://github.com/user-attachments/assets/87081624-ac59-4410-bdcb-8c2ef1403c5c" />
+
 ![GitHub last commit](https://img.shields.io/github/last-commit/AestheticWolfie/raidAlert)
 
 RaidAlert is a discord bot that posts and automatically updates a schedule in discord.
