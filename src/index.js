@@ -9,6 +9,7 @@ import mongoose from "mongoose";
 import { dirname as dn } from "node:path";
 import { fileURLToPath } from "node:url";
 import { timestampConsoleLogs } from "./utils/timestampLogs.js";
+import { DEV_GUILD, DEV_ID } from "./constants/discordIds.js";
 
 const dirname = dn(fileURLToPath(import.meta.url));
 
@@ -27,6 +28,15 @@ try {
 } catch (error) {
   timestampConsoleLogs("database connection error", error);
 }
+let devGuildIdsArray = [];
+if (DEV_GUILD) {
+  devGuildIdsArray.push(DEV_GUILD);
+}
+
+let devUserIdsArray = [];
+if (DEV_ID) {
+  devUserIdsArray.push(DEV_ID);
+}
 
 new CommandKit({
   client,
@@ -34,8 +44,8 @@ new CommandKit({
   commandsPath: `${dirname}/commands`,
   validationsPath: `${dirname}/validations`,
   bulkRegister: true,
-  devGuildIds: [],
-  devUserIds: [],
+  devGuildIds: devUserIdsArray,
+  devUserIds: devGuildIdsArray,
 });
 
 client.login(process.env.DISCORD_TOKEN);
