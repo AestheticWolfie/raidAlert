@@ -1,9 +1,6 @@
 import { ApplicationCommandType } from "discord.js";
 
-import {
-  DRAKE_DEV_ID,
-  NOTIFICATION_DEV_CHANNEL,
-} from "../constants/discordIds.js";
+import { DEV_ID, NOTIFICATION_DEV_CHANNEL } from "../constants/discordIds.js";
 
 import { createErrorNotifier } from "../utils/errorHandler.js";
 
@@ -77,7 +74,7 @@ async function saveMessageDataHelper(client, interaction, message) {
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
+      DEV_ID,
       "Updating message post settings",
       error,
     );
@@ -101,7 +98,7 @@ async function deletePreviousMessageHelper(client, interaction) {
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
+      DEV_ID,
       "Fetching guild info",
       error,
     );
@@ -137,7 +134,7 @@ async function deletePreviousMessageHelper(client, interaction) {
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
+      DEV_ID,
       "Deleting Previous Message",
       error,
     );

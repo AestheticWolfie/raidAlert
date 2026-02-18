@@ -10,7 +10,7 @@ import {
   CACHE_UNIQUE_EVENT_DATA_FILEPATH,
 } from "../../constants/filePaths.js";
 import {
-  DRAKE_DEV_ID,
+  DEV_ID,
   NOTIFICATION_DEV_CHANNEL,
 } from "../../constants/discordIds.js";
 
@@ -40,7 +40,7 @@ export async function createEventScheduleEmbedHelper(client) {
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
+      DEV_ID,
       "Fetch Cache Total Data",
       error,
     );
@@ -56,7 +56,7 @@ export async function createEventScheduleEmbedHelper(client) {
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
+      DEV_ID,
       "Fetch Unique Cache Total Data",
       error,
     );
@@ -85,7 +85,7 @@ export async function createEventScheduleEmbedHelper(client) {
     await createErrorNotifier(
       client,
       NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
+      DEV_ID,
       "Embed is undefined!",
       error,
     );

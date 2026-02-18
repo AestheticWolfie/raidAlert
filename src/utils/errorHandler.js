@@ -18,6 +18,10 @@ export async function createErrorNotifier(
   errorMessage,
 ) {
   timestampConsoleLogs(`${operation} Failed : \n ${errorMessage}`);
+
+  if (channelId === "") {
+    return;
+  }
   await sendChannelMessage(
     client,
     channelId,
