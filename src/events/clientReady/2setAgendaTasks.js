@@ -19,6 +19,8 @@ export default async (client) => {
   agenda.define(UPDATE_EMBEDS, async () => {
     const dateNowMins = new Date().getMinutes();
 
+    // The reason this is here is because events change on the hour 00 so by shifting our changes to 1 min past the hour
+    // it means that we update the correct info more reliably.
     if (dateNowMins % 3 !== 1) return;
 
     await updateEventPostsHelper(client);

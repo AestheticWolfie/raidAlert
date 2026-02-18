@@ -154,7 +154,7 @@ export function processSpecificUniqueData(
 
     default:
       throw Error(
-        `dataKeyword only accepts certain strings - ${dataType} is invalid! `,
+        `dataType only accepts certain strings - ${dataType} is invalid! `,
       );
   }
 

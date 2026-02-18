@@ -8,7 +8,7 @@ import fetch from "node-fetch";
  * @description Fetching raw data from API.
  */
 export async function fetchApiDataJson(url) {
-  if (typeof url != "string") {
+  if (typeof url !== "string") {
     throw new TypeError("fetchApiDataJson url must be a string");
   }
   const response = await fetch(url);
@@ -34,7 +34,7 @@ export async function fetchApiDataJson(url) {
  * @description Process data we get from API by returning a data object.
  */
 export function parseApiDataResponse(dataObject) {
-  if (typeof dataObject != "object" || dataObject === null) {
+  if (typeof dataObject !== "object" || dataObject === null) {
     throw new Error(
       "DataObject in parseApiDataResponse is not an object. What received from the API is not what we expect",
     );
@@ -51,18 +51,3 @@ export function parseApiDataResponse(dataObject) {
 
   return dataObject;
 }
-
-// /**
-//  *
-//  * @param {string} url
-//  * @returns {{object}}
-//  *
-//  * @description Batches together fetchApiDataJson and parseApiDataResponse into one function
-//  */
-// export async function returnApiData(url) {
-
-//   const rawdataObject = await fetchApiDataJson(url);
-//   const validatedDataObject = parseApiDataResponse(rawdataObject);
-
-//   return validatedDataObject;
-// }
