@@ -1,7 +1,5 @@
 import fs from "fs/promises";
 
-import { CACHE_TOTAL_DATA_FILEPATH } from "../../constants/filePaths.js";
-
 /**
  *
  * @param {string} cacheTotalDataFilepath
@@ -34,7 +32,7 @@ export function processCacheTotalData(dataObject) {
 
   if (!Array.isArray(dataObject.data)) {
     throw new TypeError(
-      "DataObject.data in processCacheTotalData is not an Array"
+      "DataObject.data in processCacheTotalData is not an Array",
     );
   }
 
@@ -45,16 +43,15 @@ export function processCacheTotalData(dataObject) {
       dataEle === null
     ) {
       throw new Error(
-        "Invalid array of dataObject.data. Some elements are not objects"
+        "Invalid array of dataObject.data. Some elements are not objects",
       );
     }
 
-    if (typeof dataEle?.name !== "string" || typeof dataEle.map !== "string")
-      if (dataEle?.name === undefined || dataEle?.map === undefined) {
-        throw new Error(
-          "Invalid array of dataObject.data. Missing attributes in processCacheTotalData"
-        );
-      }
+    if (typeof dataEle?.name !== "string" || typeof dataEle.map !== "string") {
+      throw new Error(
+        "Invalid array of dataObject.data. Wrong data type for ele",
+      );
+    }
   }
 
   return dataObject;

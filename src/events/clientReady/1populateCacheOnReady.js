@@ -66,6 +66,9 @@ export default async (client) => {
   timestampConsoleLogs(`Interval cache setup ok!`);
 };
 
+/**
+ * @param {import('discord.js').Client} client
+ */
 async function cacheManageScript(client) {
   // This whole script may just be pulled out and put into its own function so I can pass it in interval.
   // Future Drake in Walter White voice "You're goddamn right!"
@@ -132,7 +135,7 @@ async function cacheManageScript(client) {
 
   // Design choice here - I could use parsedApiTotalData but instead I want to base the rest of our data off the cache.
   // My thinking is that I want totalData and uniqueEventData to be a single source of truth and for the API to only
-  // depot. If I was to now use it to populate the rest then I now how multiple depots. Idk this is my thinking.
+  // depot. If I was to now use it to populate the rest then I now have multiple depots. Idk this is my thinking.
 
   let processedCacheTotalData;
   try {

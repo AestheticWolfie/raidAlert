@@ -56,8 +56,8 @@ describe("Test if object has data attribute but any of its elements dont have a 
 
 describe("Test if object has data attribute, all of the elements are objects but some element attributes map/name are not strings", () => {
   const invalidInputs = [
-    { data: { name: 1, map: "Hello" } },
-    { data: { name: "null", map: null } },
+    { data: [{ name: 1, map: "Hello" }] },
+    { data: [{ name: "null", map: null }] },
   ];
 
   invalidInputs.forEach((input, index) => {

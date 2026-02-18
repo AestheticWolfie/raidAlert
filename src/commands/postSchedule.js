@@ -1,28 +1,11 @@
-import { ApplicationCommandType, Embed } from "discord.js";
+import { ApplicationCommandType } from "discord.js";
 
-import {
-  fetchCacheTotalData,
-  processCacheTotalData,
-} from "../utils/cacheFetch/totalDataFetch.js";
-
-import {
-  CACHE_TOTAL_DATA_FILEPATH,
-  CACHE_UNIQUE_EVENT_DATA_FILEPATH,
-} from "../constants/filePaths.js";
 import {
   DRAKE_DEV_ID,
   NOTIFICATION_DEV_CHANNEL,
 } from "../constants/discordIds.js";
 
 import { createErrorNotifier } from "../utils/errorHandler.js";
-
-import {
-  fetchCacheUniqueData,
-  getSpecificUniqueData,
-  processSpecificUniqueData,
-} from "../utils/cacheFetch/uniqueDataFetch.js";
-
-import { postEventScheduleEmbedBuilder } from "../utils/customEmbeds/postScheduleEmbed.js";
 
 import GuildConfig from "../models/guildConfig.js";
 
@@ -66,17 +49,6 @@ export const run = async ({ client, interaction }) => {
     interaction,
     finalMessage,
   );
-
-  if (updatedGuild === undefined) {
-    await createErrorNotifier(
-      client,
-      NOTIFICATION_DEV_CHANNEL,
-      DRAKE_DEV_ID,
-      "Guild update suspected failure",
-      error,
-    );
-    return;
-  }
 };
 
 /**

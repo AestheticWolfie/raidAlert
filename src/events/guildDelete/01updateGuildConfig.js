@@ -3,6 +3,11 @@ import GuildConfig from "../../models/guildConfig.js";
 import { createErrorNotifier } from "../../utils/errorHandler.js";
 import { timestampConsoleLogs } from "../../utils/timestampLogs.js";
 
+import {
+  DRAKE_DEV_ID,
+  NOTIFICATION_DEV_CHANNEL,
+} from "../../constants/discordIds.js";
+
 /**
  * @param {import('discord.js').Guild} guild
  * @param {import('discord.js').Client} client
