@@ -59,7 +59,7 @@ docker run -d \
   -e DEV_GUILD=your_dev_guild_id \
   -e SUCCESS_DEV_CHANNEL=your_success_channel_id \
   -e NOTIFICATION_DEV_CHANNEL=your_notification_channel_id \
-  -v /root/raidalert-data:/app/cache \
+  -v /path/to/raidalert-data:/app/cache \
   ghcr.io/aestheticwolfie/raid-alert:latest
 ```
 
@@ -70,7 +70,7 @@ docker run -d \
   --name raidalert \
   --restart unless-stopped \
   --env-file /path/to/.env \
-  -v /root/raidalert-data:/app/cache \
+  -v /path/to/raidalert-data:/app/cache \
   ghcr.io/aestheticwolfie/raid-alert:latest
 ```
 
